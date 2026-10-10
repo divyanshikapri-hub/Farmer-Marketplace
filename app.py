@@ -2,8 +2,9 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 
 from config import Config
-from models import db, User
+from models import db, User, Crop, Order, OrderItem, Payment, Delivery
 from auth import auth_bp
+from routes.marketplace import marketplace_bp
 
 
 def create_app(config_class=Config):
@@ -19,6 +20,7 @@ def create_app(config_class=Config):
 
     # Register API blueprints
     app.register_blueprint(auth_bp)
+    app.register_blueprint(marketplace_bp)
 
     @app.route("/api/health", methods=["GET"])
     def health_check():
