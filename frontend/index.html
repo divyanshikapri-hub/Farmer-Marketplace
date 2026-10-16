@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmLink | Farmer Marketplace</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">🌾 FarmLink</div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#crops">Browse Crops</a>
+            <a href="#about">About</a>
+        </nav>
+
+        <div class="nav-buttons" id="navButtons">
+            <button class="btn-outline" onclick="showLogin()">Login</button>
+            <button class="btn-primary" onclick="showRegister()">Register</button>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <p class="tagline">FROM FARM TO MARKET</p>
+            <h1>Connecting Farmers<br>with <span>Better Markets.</span></h1>
+            <p class="hero-description">
+                A simple marketplace where farmers can sell their crops
+                and buyers can discover fresh agricultural produce.
+            </p>
+            <a href="#crops" class="btn-primary hero-button">Explore Crops →</a>
+        </div>
+
+        <div class="hero-card">
+            <div class="hero-icon">🌱</div>
+            <h3>Fresh from the farm</h3>
+            <p>Discover agricultural produce directly from farmers.</p>
+        </div>
+    </section>
+
+    <section class="features" id="about">
+        <div class="feature">
+            <span>👨‍🌾</span>
+            <h3>For Farmers</h3>
+            <p>List your crops and manage available quantities.</p>
+        </div>
+
+        <div class="feature">
+            <span>🛒</span>
+            <h3>For Buyers</h3>
+            <p>Browse crops and compare prices easily.</p>
+        </div>
+
+        <div class="feature">
+            <span>🚚</span>
+            <h3>For Transporters</h3>
+            <p>Support the movement of produce from farms to buyers.</p>
+        </div>
+    </section>
+
+    <section class="crops-section" id="crops">
+        <div class="section-heading">
+            <p class="tagline">FRESH PRODUCE</p>
+            <h2>Explore Available Crops</h2>
+            <p>Find agricultural products listed by farmers.</p>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput"
+               placeholder="Search for rice, tomatoes, mangoes...">
+
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="vegetable">Vegetables</option>
+                <option value="fruit">Fruits</option>
+                <option value="grain">Grains</option>
+                <option value="pulse">Pulses</option>
+                <option value="oilseed">Oilseeds</option>
+                <option value="other">Other</option>
+            </select>
+            <input type="number" id="minPrice" min="0" step="any" placeholder="Min ₹">
+            <input type="number" id="maxPrice" min="0" step="any" placeholder="Max ₹">
+            <button class="btn-primary" onclick="loadCrops()">Search</button>
+        </div>
+        <div id="cropList" class="crop-grid">
+            <p>Loading crops...</p>
+        </div>
+    </section>
+
+    <section class="account-section" id="accountSection" hidden>
+        <div class="account-card">
+            <button class="close-button" onclick="hideAccount()">✕</button>
+            <h2 id="formTitle">Login to FarmLink</h2>
+
+            <form id="accountForm">
+                <div id="nameField" hidden>
+                    <label for="name">Full name</label>
+                    <input type="text" id="name" placeholder="Enter your name">
+                </div>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+
+                <div id="phoneField" hidden>
+                    <label for="phone">Phone number</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number">
+                </div>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+
+                <div id="roleField" hidden>
+                    <label for="role">Register as</label>
+                    <select id="role">
+                        <option value="farmer">Farmer</option>
+                        <option value="buyer">Buyer</option>
+                        <option value="transporter">Transporter</option>
+                    </select>
+
+                    <label for="district">District / City</label>
+                    <input type="text" id="district" placeholder="Enter your district">
+
+                    <label for="state">State</label>
+                    <input type="text" id="state" placeholder="Enter your state">
+                </div>
+
+                <button type="submit" class="btn-primary form-submit">
+                    Continue
+                </button>
+
+                <p id="formMessage" role="status"></p>
+                <p id="switchMessage"></p>
+                <button type="button" id="switchButton" class="text-button">
+                    Create an account
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>🌾 FarmLink — Connecting farms to markets.</p>
+        <p>College Project | Farmer-to-Buyer Marketplace</p>
+    </footer>
+    
+<section id="addCropSection" class="account-section" hidden>
+    <div class="account-card">
+        <h2>Add a Crop</h2>
+        <p>Enter the details of the crop you want to sell.</p>
+
+        <form id="addCropForm">
+            <label for="cropName">Crop name</label>
+            <input id="cropName" type="text" required
+                   placeholder="Example: Fresh Tomatoes">
+
+            <label for="cropCategory">Category</label>
+            <select id="cropCategory" required>
+                <option value="vegetable">Vegetable</option>
+                <option value="grain">Grain</option>
+                <option value="fruit">Fruit</option>
+                <option value="pulse">Pulse</option>
+                <option value="oilseed">Oilseed</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="cropQuantity">Available quantity</label>
+            <input id="cropQuantity" type="number" min="0.01"
+                   step="any" required placeholder="Example: 100">
+
+            <label for="cropUnit">Unit</label>
+            <select id="cropUnit" required>
+                <option value="kg">Kilogram (kg)</option>
+                <option value="ton">Ton</option>
+                <option value="quintal">Quintal</option>
+                <option value="box">Box</option>
+                <option value="bag">Bag</option>
+            </select>
+
+            <label for="cropPrice">Price per unit (₹)</label>
+            <input id="cropPrice" type="number" min="0.01"
+                   step="any" required placeholder="Example: 35">
+
+            <label for="cropHarvestDate">Harvest date (optional)</label>
+            <input id="cropHarvestDate" type="date">
+
+            <label for="cropDescription">Description (optional)</label>
+            <textarea id="cropDescription"
+                      placeholder="Describe your crop"></textarea>
+
+            <button type="submit" class="btn-primary">
+                Add Crop
+            </button>
+
+            <p id="cropFormMessage"></p>
+        </form>
+    </div>
+</section>
+<section id="myCropsSection" class="account-section" hidden>
+    <div class="account-card">
+        <h2>My Crops</h2>
+        <p>Here are the crops you have listed for sale.</p>
+        <div id="myCropsList" class="crop-grid"></div>
+        <p id="myCropsMessage"></p>
+    </div>
+</section>
+
+<section id="checkoutSection" class="account-section" hidden>
+    <div class="account-card">
+        <h2>Checkout</h2>
+        <p>Enter your delivery details to place your order.</p>
+
+        <div id="checkoutItems"></div>
+
+        <form id="checkoutForm">
+            <label for="shippingAddress">Delivery address</label>
+            <textarea
+                id="shippingAddress"
+                required
+                placeholder="Enter your full delivery address"
+            ></textarea>
+
+            <label for="paymentMethod">Payment method</label>
+            <select id="paymentMethod" required>
+                <option value="cash_on_delivery">Cash on delivery</option>
+                <option value="upi">UPI (simulated)</option>
+                <option value="card">Card (simulated)</option>
+                <option value="netbanking">Net banking (simulated)</option>
+            </select>
+
+            <button type="submit" class="btn-primary">
+                Place Order
+            </button>
+
+            <p id="checkoutMessage" role="status"></p>
+        </form>
+    </div>
+</section>
+
+<section id="orderConfirmationSection" class="account-section" hidden>
+    <div class="account-card">
+        <h2>Order placed successfully! 🎉</h2>
+        <p>Thank you for shopping with FarmLink.</p>
+        <p id="confirmationOrderId"></p>
+        <button type="button" class="btn-primary" onclick="showMyOrders()">
+            View My Orders
+        </button>
+        <button type="button" class="btn-outline" onclick="backToMarketplace()">
+            Continue Shopping
+        </button>
+    </div>
+</section>
+
+<section id="myOrdersSection" class="account-section" hidden>
+    <div class="account-card">
+        <h2>My Orders</h2>
+        <p>View the crops you have ordered.</p>
+        <div id="myOrdersList"></div>
+        <p id="myOrdersMessage" role="status"></p>
+    </div>
+</section>
+
+    <script src="app.js"></script>
+</body>
+</html>
+```
